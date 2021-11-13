@@ -36,13 +36,14 @@
       </div>
     </section>
     <!-- Your web-app is https, so your scripts need to be too -->
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js" 
+            integrity="sha384-8C+3bW/ArbXinsJduAjm9O7WNnuOcO+Bok/VScRYikawtvz4ZPrpXtGfKIewM9dK" 
             crossorigin="anonymous"></script>
     <script>
       $(function() {
         $('#convertForm').submit(function(event) {
           event.preventDefault();
+          console.log("make ajax request to '/api/convert'")
           $.ajax({
             url: '/api/convert',
             type: 'get',
@@ -50,6 +51,9 @@
             success: function(data) {
               $('#result').text(data.string || data);
               $('#jsonResult').text(JSON.stringify(data));
+            },
+            failed: function (data) {
+              $("#result").text("failed to load");
             }
           });
         });
