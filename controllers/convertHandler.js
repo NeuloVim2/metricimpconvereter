@@ -3,7 +3,7 @@ const math = require('mathjs');
 function ConvertHandler() {
 
 
-  const numFormat = /^(\d+|(\d*\.{0,1}\d+[/\.]{1}\d*\.{0,1}\d+))(?=([a-zA-Z]+)$)/;
+  const numFormat = /^(\d+|(\d*\.{0,1}\d+[/\/.]{1}\d*\.{0,1}\d+))(?=([a-zA-Z]+)$)/;
   const unitFormat = /((gal)|L|(mi)|(km)|(kg)|(lbs))$/i;
 
   this.getNum = function (input) {
@@ -62,7 +62,7 @@ function ConvertHandler() {
       ? math.divide(math.bignumber(initNum.split("/")[0]), math.bignumber(initNum.split("/")[1]))
       : initNum;
 
-    switch (initUnit) {
+    switch (initUnit) { 
       case "L": result = math.round(math.divide(math.bignumber(fractionToDecimal), math.bignumber(galToL)), 5);
         break;
 
