@@ -58,8 +58,8 @@ function ConvertHandler() {
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
-    let fractionToDecimal = isFraction(initNum)
-      ? math.divide(math.bignumber(initUnit.split("/")[0]), math.bignumber(initUnit.split("/")[1]))
+    let fractionToDecimal = isFraction(initNum) 
+      ? math.divide(math.bignumber(initNum.split("/")[0]), math.bignumber(initNum.split("/")[1]))
       : initNum;
 
     switch (initUnit) {
