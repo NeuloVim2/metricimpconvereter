@@ -11,8 +11,8 @@ suite('Functional Tests', function () {
             .request(server)
             .get("/api/convert?input=20L")
             .end((err, res) => {
-                if(err)
-                  console.log(err);
+                if (err)
+                    console.log(err);
                 assert.equal(res.status, 200);
                 assert.equal(res.type, "application/json");
                 assert.equal(res.body.initNum, "20");

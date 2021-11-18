@@ -7,11 +7,15 @@ function ConvertHandler() {
   const unitFormat = /((gal)|L|(mi)|(km)|(kg)|(lbs))$/i;
 
   this.getNum = function (input) {
-    if (numFormat.test(input))
-      return input.split(numFormat)[1]
+    if (numFormat.test(input)) {
+      let num = input.split(numFormat)[1]
+      return isFraction(num)
+        ? parseFloat(math.divide(math.bignumber(num.split("/")[0]), math.bignumber(num.split("/")[1])))
+        : parseFloat(num);
+    }
 
     if (!/^\d+/.test(input))
-      return "1";
+      return 1;
 
     return "invalid number";
   };
@@ -58,31 +62,28 @@ function ConvertHandler() {
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
-    let fractionToDecimal = isFraction(initNum) 
-      ? math.divide(math.bignumber(initNum.split("/")[0]), math.bignumber(initNum.split("/")[1]))
-      : initNum;
 
-    switch (initUnit) { 
-      case "L": result = math.round(math.divide(math.bignumber(fractionToDecimal), math.bignumber(galToL)), 5);
+    switch (initUnit) {
+      case "L": result = math.round(math.divide(math.bignumber(initNum), math.bignumber(galToL)), 5);
         break;
 
-      case "gal": result = math.round(math.multiply(math.bignumber(fractionToDecimal), math.bignumber(galToL)), 5);
+      case "gal": result = math.round(math.multiply(math.bignumber(initNum), math.bignumber(galToL)), 5);
         break;
 
-      case "lbs": result = math.round(math.multiply(math.bignumber(fractionToDecimal), math.bignumber(lbsToKg)), 5);
+      case "lbs": result = math.round(math.multiply(math.bignumber(initNum), math.bignumber(lbsToKg)), 5);
         break;
 
-      case "kg": result = math.round(math.divide(math.bignumber(fractionToDecimal), math.bignumber(lbsToKg)), 5);
+      case "kg": result = math.round(math.divide(math.bignumber(initNum), math.bignumber(lbsToKg)), 5);
         break;
 
-      case "mi": result = math.round(math.multiply(math.bignumber(fractionToDecimal), math.bignumber(miToKm)), 5);
+      case "mi": result = math.round(math.multiply(math.bignumber(initNum), math.bignumber(miToKm)), 5);
         break;
 
-      case "km": result = math.round(math.divide(math.bignumber(fractionToDecimal), math.bignumber(miToKm)), 5);
+      case "km": result = math.round(math.divide(math.bignumber(initNum), math.bignumber(miToKm)), 5);
         break;
 
     }
-    return result;
+    return parseFloat(result);
   }
 
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
